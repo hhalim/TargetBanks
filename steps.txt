@@ -1,0 +1,15 @@
+DB Preps:
+Create new DB in SQL Server, name it "bkrob".
+Create a new sql login for the database, username="bkrob_adm", password="bkrob_adm".
+Set "bkrob_adm" user mapping to "bkrob" database.
+Give "bkrob_adm" user membership as db_owner.
+
+DATA Gatherings:
+/data_parse/
+get_banks_TX.py #parse FDIC data TX and enter into DB
+get_police_TX.py #parse policeone.com for TX police infos
+
+/data_fill/
+banks_geocode.py #fill in lat/lng from google API geocode
+police_geocode.py
+
