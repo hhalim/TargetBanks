@@ -13,7 +13,7 @@ from geopy import geocoders
 cnxn = pyodbc.connect( 'DRIVER={ODBC Driver 13 for SQL Server};SERVER=' + cfg.mssql['server'] + ';DATABASE=' 
                       + cfg.mssql['database'] + ';UID=' + cfg.mssql['username'] + ';PWD=' + cfg.mssql['password'] )
 cursor = cnxn.cursor()
-cursor.execute('SELECT [StationID], [address1], [city], [state], [zip], [lat], [lng] FROM PoliceStations;')
+cursor.execute('SELECT [StationID], [address1], [city], [state], [zip], [lat], [lng] FROM PoliceStation;')
 
 geoloc = geocoders.GoogleV3(api_key=cfg.google_geocode_api)
 
@@ -31,7 +31,7 @@ for row in cursor.fetchall():
 
     print(loc.address, 'lat:',loc.latitude, 'lng:', loc.longitude)
 
-    upd_qry = "UPDATE [PoliceStations] SET [Lat] = ?, [Lng] = ? WHERE [StationID] = ? ;"
+    upd_qry = "UPDATE [PoliceStation] SET [Lat] = ?, [Lng] = ? WHERE [StationID] = ? ;"
     cursor.execute(upd_qry, [loc.latitude, loc.longitude, row.StationID])
 
     count += 1

@@ -12,4 +12,14 @@ get_police_TX.py #parse policeone.com for TX police infos
 /data_fill/
 banks_geocode.py #fill in lat/lng from google API geocode
 police_geocode.py
+banks_closest.py
+pdistance.py
+pserved.py
+psuccess.py
 
+/* target selection class on sample data */
+Create sample data:
+/sql/sample.sql
+
+Run target selection on sample data:
+/data_fill/target.py

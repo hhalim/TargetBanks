@@ -60,7 +60,7 @@ def save_db(ps_list):
     cursor = cnxn.cursor()
     
     query = """
-        INSERT INTO [PoliceStations]
+        INSERT INTO [PoliceStation]
                (
                [URL]
                ,[Name]
@@ -78,7 +78,7 @@ def save_db(ps_list):
     
     for item in ps_list:
         #check URL exists already or not
-        row = cursor.execute("select COUNT(StationID) as count from PoliceStations WHERE URL = ?", item['url']).fetchone()
+        row = cursor.execute("select COUNT(StationID) as count from PoliceStation WHERE URL = ?", item['url']).fetchone()
         if row and (row.count > 0):
             continue
         

@@ -49,7 +49,7 @@ def insert_db(banks, state):
     cursor = cnxn.cursor()
     
     query = """
-        INSERT INTO [Banks]
+        INSERT INTO [Bank]
                (
                [UniqueNum]
                ,[Name]
