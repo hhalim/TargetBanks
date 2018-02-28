@@ -1,5 +1,5 @@
 INSERT INTO BankSample (
-	[UniqueNum]
+    	[UniqueNum]
     ,[Name]
     ,[Address1]
     ,[Address2]
@@ -14,12 +14,12 @@ INSERT INTO BankSample (
     ,[MeanPSDistance]
     ,[PSCount]
     ,[Take]
-    ,[PSuccess]
     ,[PDistance]
-    ,[PServed]
+    ,Officers1000
+    ,[FFLCount]
 	 )
 SELECT TOP 10 PERCENT 
-	[UniqueNum]
+    	[UniqueNum]
     ,[Name]
     ,[Address1]
     ,[Address2]
@@ -34,9 +34,9 @@ SELECT TOP 10 PERCENT
     ,[MeanPSDistance]
     ,[PSCount]
     ,[Take]
-    ,[PSuccess]
     ,[PDistance]
-    ,[PServed]
+    ,Officers1000
+    ,[FFLCount]
 FROM Bank
 ORDER BY rand(checksum(*))
 

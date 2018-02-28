@@ -3,6 +3,15 @@
 import config as cfg
 import pyodbc
 
+"""
+Fill in closest Police Stations within 10 miles
+
+Latitude/Longitude distance coefficients:
+--Miles 3958.75
+--Kilometers 6367.45 
+--Feet 20890584 
+--Meters 6367450 
+"""
 def calculate_distance(bankID, lat, lng):
     query = """
         DECLARE @latitude float, @longitude float

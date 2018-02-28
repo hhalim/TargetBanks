@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-P(Caught by PopulationServed)
-y = (Police/PopServed) * 1000 * 5%
-Number of police/pop served per 1000, higher means higher risk P(police/Population Served)
-Number of police within 10 miles near bank, higher means higher risk P(Count)
-
+Officers1000
+y = (Police/PopServed) * 1000
+Number of police/pop served per 1000, higher means higher risk 
+Police # is within 5 miles of the bank
+Population is by city
 """
 import config as cfg
 import pyodbc
 
-def fill_pserved(bankID, lat, lng):
+def fill_officersRate(bankID, lat, lng, population):
     query = """
         DECLARE @latitude float, @longitude float
         SELECT @latitude = ?, @longitude = ?
@@ -37,7 +37,7 @@ def fill_pserved(bankID, lat, lng):
             - radians(@longitude) ) + sin( radians(@latitude) ) * sin( radians( Lat ) ) ) ) AS Distance 
             	FROM PoliceStation
             ) as x   
-        WHERE Distance <= 10   
+        WHERE Distance <= 5   
         ORDER BY Distance;
     """
 
@@ -48,28 +48,25 @@ def fill_pserved(bankID, lat, lng):
     params = [lat, lng]
     rows = cursor.execute(query, params)
     
-    totPopulation = 0
+    totPopulation = population if population else 1
     totOfficers = 0
     for row in rows:
-        totPopulation = totPopulation + float(row.Population if row.Population else 0)
         totOfficers = totOfficers + float(row.Officers if row.Officers else 0)
 
-    if(totPopulation == 0):
-        totPopulation = 1
-    pServed = totOfficers/totPopulation * 1000.0 * 0.05
+    officersRate = totOfficers/totPopulation * 1000.0
 
-    print(bankID, totOfficers, totPopulation, pServed)
+    print(bankID, totOfficers, totPopulation, officersRate)
     
     # Save back into table
     query2 = """
         UPDATE Bank
         SET 
-        [PServed] = ?
+        [Officers1000] = ?
         WHERE [BankID] = ?
         ;
     """
 
-    params2 = [pServed, bankID] 
+    params2 = [officersRate, bankID] 
     cursor.execute(query2, params2)
     cnxn.commit()
 
@@ -79,8 +76,8 @@ cnxn = pyodbc.connect( 'DRIVER={ODBC Driver 13 for SQL Server};SERVER=' + cfg.ms
                       + cfg.mssql['database'] + ';UID=' + cfg.mssql['username'] + ';PWD=' + cfg.mssql['password'] )
 cursor = cnxn.cursor()
 
-query = "SELECT BankID, lat, lng FROM Bank;"
+query = "SELECT BankID, Lat, Lng, Population FROM BankView;"
 rows = cursor.execute(query)
 
 for row in rows:
-    fill_pserved(row.BankID, row.lat, row.lng)
+    fill_officersRate(row.BankID, row.Lat, row.Lng, row.Population)

@@ -29,10 +29,10 @@ for row in cursor.fetchall():
     if(loc is None):
         continue
 
-    print(loc.address, 'lat:',loc.latitude, 'lng:', loc.longitude)
+    print(loc.address, 'lat:', round(loc.latitude, 4), 'lng:', round(loc.longitude, 4))
 
     upd_qry = "UPDATE [Bank] SET [Lat] = ?, [Lng] = ? WHERE [BankID] = ? ;"
-    cursor.execute(upd_qry, [loc.latitude, loc.longitude, row.bankid])
+    cursor.execute(upd_qry, [round(loc.latitude, 4), round(loc.longitude, 4), row.bankid])
 
     count += 1
     if(count >= 5):
