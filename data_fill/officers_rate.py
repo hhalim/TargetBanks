@@ -81,7 +81,7 @@ cnxn = pyodbc.connect( 'DRIVER={ODBC Driver 13 for SQL Server};SERVER=' + cfg.ms
                       + cfg.mssql['database'] + ';UID=' + cfg.mssql['username'] + ';PWD=' + cfg.mssql['password'] )
 cursor = cnxn.cursor()
 
-query = "SELECT BankID, Lat, Lng FROM Bank;"
+query = "SELECT BankID, Lat, Lng FROM Bank WHERE [Officers1000] IS NULL;"
 rows = cursor.execute(query)
 
 for row in rows:

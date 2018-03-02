@@ -71,8 +71,8 @@ cnxn = pyodbc.connect( 'DRIVER={ODBC Driver 13 for SQL Server};SERVER=' + cfg.ms
                       + cfg.mssql['database'] + ';UID=' + cfg.mssql['username'] + ';PWD=' + cfg.mssql['password'] )
 cursor = cnxn.cursor()
 
-query = "SELECT BankID, [State], [Take], PDistance, [Officers1000], FFLCount, [Population], CrimeTotal1000 FROM BankSampleView;"
+query = "SELECT BankID, [State], [Take], PDistance, [Officers1000], FFLCount, [Population], CrimeRate1000 FROM BankSampleView;"
 rows = cursor.execute(query)
 
 for row in rows:
-    target_select(row.BankID, row.State, row.Take, row.PDistance, row.Officers1000, row.FFLCount, row.Population, row.CrimeTotal1000)
+    target_select(row.BankID, row.State, row.Take, row.PDistance, row.Officers1000, row.FFLCount, row.Population, row.CrimeRate1000)

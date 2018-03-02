@@ -47,7 +47,7 @@ cnxn = pyodbc.connect( 'DRIVER={ODBC Driver 13 for SQL Server};SERVER=' + cfg.ms
                       + cfg.mssql['database'] + ';UID=' + cfg.mssql['username'] + ';PWD=' + cfg.mssql['password'] )
 cursor = cnxn.cursor()
 
-query = "SELECT BankID, ClosestPSDistance FROM Bank;"
+query = "SELECT BankID, ClosestPSDistance FROM Bank WHERE [PDistance] IS NULL;"
 rows = cursor.execute(query)
 
 for row in rows:
