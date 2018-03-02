@@ -13,7 +13,7 @@ from geopy import geocoders
 cnxn = pyodbc.connect( 'DRIVER={ODBC Driver 13 for SQL Server};SERVER=' + cfg.mssql['server'] + ';DATABASE=' 
                       + cfg.mssql['database'] + ';UID=' + cfg.mssql['username'] + ';PWD=' + cfg.mssql['password'] )
 cursor = cnxn.cursor()
-cursor.execute('SELECT bankid, address1, address2, city, state, zip, lat, lng FROM Bank;')
+cursor.execute('SELECT bankid, address1, address2, city, state, zip, lat, lng FROM Bank WHERE [Lat] IS NULL OR [Lng] IS NULL;')
 
 geoloc = geocoders.GoogleV3(api_key=cfg.google_geocode_api)
 

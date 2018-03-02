@@ -9,7 +9,7 @@ Population is by city
 import config as cfg
 import pyodbc
 
-def fill_officersRate(bankID, lat, lng, population):
+def fill_officersRate(bankID, lat, lng):
     query = """
         DECLARE @latitude float, @longitude float
         SELECT @latitude = ?, @longitude = ?
@@ -48,12 +48,17 @@ def fill_officersRate(bankID, lat, lng, population):
     params = [lat, lng]
     rows = cursor.execute(query, params)
     
-    totPopulation = population if population else 1
     totOfficers = 0
+    totPopulation = 0
     for row in rows:
+        totPopulation = totPopulation + float(row.Population if row.Population else 0)
         totOfficers = totOfficers + float(row.Officers if row.Officers else 0)
 
-    officersRate = totOfficers/totPopulation * 1000.0
+    totPopulation = totPopulation if totPopulation else 1; #avoid divide by zero
+    
+    officersRate = 0
+    if(totOfficers <= totPopulation):
+        officersRate = (totOfficers/totPopulation) * 1000.0
 
     print(bankID, totOfficers, totPopulation, officersRate)
     
@@ -76,8 +81,8 @@ cnxn = pyodbc.connect( 'DRIVER={ODBC Driver 13 for SQL Server};SERVER=' + cfg.ms
                       + cfg.mssql['database'] + ';UID=' + cfg.mssql['username'] + ';PWD=' + cfg.mssql['password'] )
 cursor = cnxn.cursor()
 
-query = "SELECT BankID, Lat, Lng, Population FROM BankView;"
+query = "SELECT BankID, Lat, Lng FROM Bank;"
 rows = cursor.execute(query)
 
 for row in rows:
-    fill_officersRate(row.BankID, row.Lat, row.Lng, row.Population)
+    fill_officersRate(row.BankID, row.Lat, row.Lng)

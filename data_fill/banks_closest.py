@@ -5,7 +5,7 @@ import pyodbc
 
 """
 Fill in closest Police Stations within 10 miles
-
+If there is no closest PS, then ClosestPSDistance = MeanPSDistance = 10.5 miles
 Latitude/Longitude distance coefficients:
 --Miles 3958.75
 --Kilometers 6367.45 
@@ -73,10 +73,11 @@ def calculate_distance(bankID, lat, lng):
         ;
     """
     
+    over10 = 10.5 #over 10 miles
     if not closestStationID: #no closest station in 10 miles
         closestStationID = None
-        closestPSDistance = None
-        meanPSDistance = None
+        closestPSDistance = over10
+        meanPSDistance = over10
         psCount = 0
         
     params2 = [closestStationID, closestPSDistance, meanPSDistance, psCount, bankID] 

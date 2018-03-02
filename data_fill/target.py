@@ -35,8 +35,8 @@ def target_select(bankID, state, take, pDistance, officersRate, fflCount, popula
         # straight conversion into percentage
         pArmed = (fflCount / 100.0)
     
-        #pSuccess = 1.0 - (pDistance + pServed + pArmed)
-        pSuccess = 1 - (pDistance + pServed)/2.0  - pArmed/4.0
+        #Factor of success: pDistance and pServed is 75%, pArmed is 25% factor
+        pSuccess = 1 - (pDistance + pServed)*0.75  - (pArmed*0.25)
         
         if take >= 10000.0 and 1 >= pSuccess and pSuccess >= 0.9 :
             target = 1

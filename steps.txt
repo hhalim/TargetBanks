@@ -4,10 +4,18 @@ Create a new sql login for the database, username="bkrob_adm", password="bkrob_a
 Set "bkrob_adm" user mapping to "bkrob" database.
 Give "bkrob_adm" user membership as db_owner.
 
+SSIS Import:
+ffl_TX_import.xlsx
+TX_Crimes_City_2016.xlsx
+
 DATA Gatherings:
 /data_parse/
 get_banks_TX.py #parse FDIC data TX and enter into DB
 get_police_TX.py #parse policeone.com for TX police infos
+
+DATA Clean Up:
+PoliceStations: replace Officers # if it seems way too high, also remove duplicates based on LAT
+
 
 /data_fill/
 banks_geocode.py #fill in lat/lng from google API geocode
