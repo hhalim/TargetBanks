@@ -2,7 +2,7 @@
 """
 P(Caught by Distance) 
 y = 70 - 10x
-y% = 0.7 - (x/10)
+y% = 0.7 - 0.1x
     x = time to get to bank from station (assuming 60mph 1mile/1min)
     y = P(caught by distance)
     
@@ -19,7 +19,7 @@ def fill_pdistance(bankID, closestDistance):
     if (not closestDistance):
         pDistance = 0
     else:
-        pDistance = 0.7 - (float(closestDistance * mileMinute) / 10.0)
+        pDistance = 0.7 - (0.1 * float(closestDistance * mileMinute))
     
     if(pDistance < 0):
         pDistance = 0
