@@ -11,11 +11,11 @@ TX_Crimes_City_2016.xlsx
 *** DATA Gatherings:
 /data_parse/
 get_banks_TX.py #parse FDIC data TX and enter into DB
+get_ratings.py #ratings and reviews from google api
 get_police_TX.py #parse policeone.com for TX police infos
 
 *** DATA Clean Up:
 PoliceStations: replace Officers # if it seems way too high, also remove duplicates based on LAT
-
 
 *** DATA FILL
 ** Geocoding
@@ -26,11 +26,11 @@ ffl_geocode.py
 
 ** Take, Count and Probabilities 
 /data_fill/
-take.py
-banks_closest.py
-ffl_count.py
-pdistance.py
-officers_rate.py
+take.py  #Money that's available to take
+banks_closest.py  # Closest police stations for each bank
+ffl_count.py  # Number of closest FFL for each bank
+pdistance.py  # Possibility of getting caught by distance to PoliceStations, based on a formula
+officers_rate.py  # Number of police/pop. served per 1000
 
 *** SAMPLE DATA
 ** Create sample data:
